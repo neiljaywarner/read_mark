@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:convert';
 
@@ -44,7 +45,15 @@ class AddVerseResponseWidget  extends ConsumerWidget {
             error: (err, stack) => Text('Error: $err'),
             data: (verseResponseList) {
               final thirdVerse = verseResponseList.firstWhere((element) => element.chapterNumber == 5);
-              return Center(child:Text(thirdVerse.value ?? ''));
+              //return Center(child:Text(thirdVerse.value ?? ''));
+              final chapter5 = verseResponseList.where((element) => element.chapterNumber ==5);
+              final itemsInChapter5 = chapter5.length;
+              return ListView.builder(itemCount: itemsInChapter5,
+              itemBuilder: (BuildContext context, int index) {
+                WebLocalBookItem item = chapter5.elementAt(index);
+                  return Text(item.value ?? '');
+              });
+
             }));
 
   }
